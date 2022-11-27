@@ -1,7 +1,7 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "@/Commerce/css/main.css";
+//import * as React from "react";
+//import * as ReactDOM from "react-dom";
+//import { BrowserRouter, Routes, Route } from "react-router-dom";
+//import "@/Commerce/css/main.css";
 
 //import Expenses from "@/routes-demo/routes/expenses";
 //import Invoices from "@/routes-demo/routes/invoices";
@@ -9,8 +9,7 @@ import "@/Commerce/css/main.css";
 
 /***********************************************/
 /*********** FIC: INICIO CON LOGIN *************/
-/***********************************************/
-
+/****************************************/
 /* import { createRoot } from 'react-dom/client';
 const container = document.getElementById('root')!;
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
@@ -21,7 +20,6 @@ root.render(
 /***********************************************/
 /****** FIC: INICIO CON MENU HAMBURGUESA *******/
 /***********************************************/
-
 //FIC: Root contains the main dependencies and providers of the base app
 //- React, ReactDom, RecoilRoot, HelmetProvider, ThemeProvider, MUI-core)
 //App contains the main structure of the base app
