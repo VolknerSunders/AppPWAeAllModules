@@ -1,0 +1,68 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+}
+
+.container > div{
+    width: 50%;
+    height: 560px;
+}
+
+.caja{
+    //background-color: #F5F5F5;
+    padding: 10px;
+    //border-color: gray;
+    //border-width: 1px;
+    //border-style: double;
+    display:block;
+    
+}
+
+.card{
+    width: 15rem;
+    margin: 10px;
+}
+
+.btn {
+    margin: 2px;
+}
+
+.div-inventarios_info_ad{
+    background-color: #dcdcdc;
+}
+
+.modal{
+    display: block !important; /* I added this to see the modal, you don't need this */
+}
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 70vh;
+    overflow-y: auto;
+    scrollbar-color: #fccb90 #F5F5F5;
+}
+
+.modal-body h6{
+    color: blue;
+}
+
+.modal-body hr{
+    border-color: black;
+    border-width: 3px;
+}
+
+.Collapsible{
+    background-color: #E9ECEF;
+    border-radius: 5px;
+    padding: 5px;
+}
