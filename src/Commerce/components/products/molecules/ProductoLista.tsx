@@ -32,9 +32,16 @@ class ProductoLista extends Component<any, any>{
         <Paper sx={{ p: 2, margin: 'auto', maxWidth: 800, flexGrow: 1, backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'), }}>
           <Grid container spacing={2} direction="row" justifyContent="flex-start" alignItems="center">
             <Grid item>
-              <ButtonBase sx={{ width: 75, height: 75 }}>
-                <this.ImgProd alt="Imagen del producto" src={this.props.data.cat_prod_serv_presenta[0].cat_prod_serv_archivos[0].RutaArchivo} />
-              </ButtonBase>
+              <>{(typeof (this.props.data.cat_prod_serv_presenta[0]) != 'undefined') ?
+                (<ButtonBase sx={{ width: 75, height: 75 }}>
+                  <this.ImgProd alt="Imagen del producto" src={this.props.data.cat_prod_serv_presenta[0].cat_prod_serv_archivos[0].RutaArchivo} />
+                </ButtonBase>) :(<ButtonBase sx={{ width: 75, height: 75 }}>
+                  <this.ImgProd alt="Imagen del producto" src="" />
+                </ButtonBase>)
+                /* (console.log("ABC" + typeof (this.props.data.cat_prod_serv_presenta[0])))*/
+                }
+                </>
+
             </Grid>
             <Grid item xs={10} sm container>
               <ProductoListaItem data={this.props.data} />

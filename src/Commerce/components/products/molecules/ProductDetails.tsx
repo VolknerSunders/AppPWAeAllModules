@@ -3,10 +3,10 @@ import { Breadcrumb, BreadcrumbItem, Col, Container, Row, Table } from 'react-bo
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../../css/css/custom.css';
-import '../../../css/css/fontawesome.css';
-import '../../../css/css/animate.min.css';
-import '../../../css/css/placeholder-loading.min.css';
+import '../../../css/Products/custom.css';
+import '../../../css/Products/fontawesome.css';
+import '../../../css/Products/animate.min.css';
+import '../../../css/Products/placeholder-loading.min.css';
 //--------------------------------------------------------- / Bootstrap /
 
 import { Link, Navigate } from 'react-router-dom';
@@ -102,7 +102,7 @@ class ProductDetails extends Component<any, ProductDetailsState> {
                          this.setState({ addToCart: "Add To Cart" })
                     }
 
-               }).catch(error => {
+               }).catch(() => {
                     cogoToast.error("Your Request is not done ! Try Aagain", { position: 'top-right' });
                     this.setState({ addToCart: "Add To Cart" })
 
@@ -159,7 +159,7 @@ class ProductDetails extends Component<any, ProductDetailsState> {
                          this.setState({ addToCart: "Add To Cart" })
                     }
 
-               }).catch(error => {
+               }).catch(() => {
                     cogoToast.error("Your Request is not done ! Try Aagain", { position: 'top-right' });
                     this.setState({ addToCart: "Add To Cart" })
 
@@ -184,8 +184,6 @@ class ProductDetails extends Component<any, ProductDetailsState> {
 
      addToFav = () => {
           this.setState({ addToFav: "Adding..." })
-          let productCode = this.state.productCode;
-          let email = this.props.user.email;
 
           if (!localStorage.getItem('token')) {
                cogoToast.warn('Please You have to Login First', { position: 'top-right' });
@@ -203,7 +201,7 @@ class ProductDetails extends Component<any, ProductDetailsState> {
                          this.setState({ addToFav: "Favourite" })
                     }
 
-               }).catch(error => {
+               }).catch(() => {
                     cogoToast.error("Your Request is not done ! Try Aagain", { position: 'top-right' });
                     this.setState({ addToFav: "Favourite" })
 
@@ -242,24 +240,6 @@ class ProductDetails extends Component<any, ProductDetailsState> {
           }
      }
 
-
-
-     PriceOption(price: any, special_price: any) {
-          if (special_price == "na") {
-               return (
-                    <p className="product-price-on-card"> Price : {price}$ </p>
-               )
-          } else {
-
-               return (
-                    <p className="product-price-on-card">
-                         Price :  {special_price}$ <s className="text-secondary">{price}$ </s>
-                    </p>
-               )
-
-          }
-     }
-
      /* CargarImagen(data: any) {
           if (typeof (data) != typeof ('')) {
                const x = JSON.parse(JSON.stringify(data))
@@ -282,13 +262,13 @@ class ProductDetails extends Component<any, ProductDetailsState> {
      CargarArrayImagen(data: any, producto: number) {
           if (typeof (data) != typeof ('')) {
                const dataProcesada = JSON.parse(JSON.stringify(data))
-               console.log("typeof: " + typeof (dataProcesada) + "valor: " + dataProcesada)
-               console.log("typeof: " + typeof (data) + "valor: " + data)
+               //console.log("typeof: " + typeof (dataProcesada) + "valor: " + dataProcesada)
+               //console.log("typeof: " + typeof (data) + "valor: " + data)
                let f = dataProcesada[producto].cat_prod_serv_presenta[producto].cat_prod_serv_archivos;
 
 
 
-               console.log(f);
+               //console.log(f);
                let resultado = f.map((i: { RutaArchivo: string | undefined; }) => (
                     <div style={{ width: '100%', height: '100%' }}>
                          <img onClick={this.imgOnClick} className="w-75 h-50 product-sm-img" src={i.RutaArchivo} />
@@ -424,17 +404,13 @@ class ProductDetails extends Component<any, ProductDetailsState> {
           let CodigoBarras = ProductAllData[0]['CodigoBarras'];
 
 
-
-          let price = "5000"//ProductAllData['productList'][0]['price'];
           let product_code = "CODIGO DE PRODUCTO"//ProductAllData['productList'][0]['product_code'];
           let DesProdServ = ProductAllData[0]['DesProdServ'];
-          let special_price = "500"//ProductAllData['productList'][0]['special_price'];
-          let star = "ESTRELLAS";//ProductAllData['productList'][0]['star'];
 
           let size = "TAMAÑO"//ProductAllData['productDetails'][0]['size'];
 
 
-          let short_description = "DESCRIPCION CORTA"//ProductAllData['productDetails'][0]['short_description'];
+          let short_description =  ProductAllData[0]['cat_prod_serv_presenta'][0]['DesPresenta']
 
 
 
@@ -442,10 +418,6 @@ class ProductDetails extends Component<any, ProductDetailsState> {
 
           var SizeDiv = "d-none"
           if (size != "na") {
-               let SizeArray = size.split(',');
-               var SizeOption = SizeArray.map((SizeList: any) => {
-                    return <option value={SizeList}> {SizeList} </option>
-               })
                SizeDiv = ""
           }
           else {
@@ -487,7 +459,7 @@ class ProductDetails extends Component<any, ProductDetailsState> {
                                              <Container className="my-3">
                                                   <Row>
                                                        <Carousel showArrows={false} showIndicators={false} dynamicHeight={true} >
-                                                            {this.CargarArrayImagen(ProductAllData, 2)}
+                                                            {this.CargarArrayImagen(ProductAllData, 1)}
                                                        </Carousel>
                                                   </Row>
                                              </Container>
@@ -495,22 +467,10 @@ class ProductDetails extends Component<any, ProductDetailsState> {
                                         <Col className="p-3 " md={6} lg={6} sm={12} xs={12}>
                                              {/*<h5 className="Product-Name"> {title} </h5>*/}
                                              <h6 className="section-sub-title"> {short_description} </h6>
-
-
-                                             {this.PriceOption(price, special_price)}
-
-
                                              <h6 className="mt-2">IdProdServOK : <b>{IdProdServOK}</b>  </h6>
-
                                              <h6 className="mt-2">IdInstitutoOK : <b>{IdInstitutoOK}</b></h6>
-
                                              <h6 className="mt-2">IdProdServBK : <b>{IdProdServBK}</b></h6>
-
                                              <h6 className="mt-2">Codigo de Barras : <b>{CodigoBarras}</b></h6>
-
-
-
-
 
                                              <div>
                                                   <h6 className="mt-2"> Choose Color  </h6>
@@ -572,7 +532,7 @@ class ProductDetails extends Component<any, ProductDetailsState> {
                                         </Col>
                                    </Row>
                                    <Row className='w-50'>
-                                        {this.CargarCaracteristicas(ProductAllData, 0)}
+                                        {this.CargarCaracteristicas(ProductAllData, 0     )}
                                    </Row>
 
 
@@ -593,11 +553,5 @@ class ProductDetails extends Component<any, ProductDetailsState> {
 }
 
 export default ProductDetails
-function join(arg0: any): any {
-     throw new Error('Function not implemented.');
-}
 
-function loadStrings(x: string): any {
-     throw new Error('Function not implemented.');
-}
 

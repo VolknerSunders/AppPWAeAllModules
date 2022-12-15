@@ -1,12 +1,12 @@
 import { Fragment } from 'react'
 import 'bootstrap/dist/css/bootstrap.css';
-import Page_Inventories from '@/Commerce/components/products/molecules/Page_Inventories';
+import FormularioProducto from '@/Commerce/components/products/molecules/FormularioProducto';
 //import SliderLoading from '../components/PlaceHolder/SliderLoading'
 
 
 function FormularioProductos () {   
   return( <Fragment>
-            <Page_Inventories></Page_Inventories>
+            <FormularioProducto></FormularioProducto>
           </Fragment>
   )
 }

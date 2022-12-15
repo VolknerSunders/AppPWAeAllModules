@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 
-export default function VistaProductos() {
+function VistaProductos() {
 
   const [ListaProductos, setListaProductos] = useState({
     user: 'Usuario',
@@ -37,6 +37,8 @@ export default function VistaProductos() {
 
       return resultado;
     }
+    else
+      return
   }
 
 
@@ -55,3 +57,4 @@ export default function VistaProductos() {
   );
 }
 
+export default VistaProductos

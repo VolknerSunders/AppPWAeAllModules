@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 // Import our custom CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../../css/Page_Inventories.scss'
+import '../../../css/Products/Page_Inventories.scss'
 import Collapsible from 'react-collapsible';
 import {
   Modal,
@@ -24,34 +24,34 @@ import { cat_prod_serv_archivos } from '../organisms/cat_prod_serv_archivos';
 import { cat_prod_serv_paquetes } from '../organisms/cat_prod_serv_paquetes';
 import Producto from '../organisms/Producto';
 
-function Page_Inventories() {
+function FormularioProducto() {
   const [queBoton, setQueBoton] = useState('');
   //Modal
   const [isOpen, setIsOpen] = useState(false);
 
   const [cat_prod_serv_info_ad, setCat_prod_serv_info_ad] = useState<cat_prod_serv_info_ad>({})
-  var arreglo_cat_prod_serv_info_ad: cat_prod_serv_info_ad[] = []
+  const arreglo_cat_prod_serv_info_ad: cat_prod_serv_info_ad[] = []
 
   const [cat_prod_serv_estatus, setCat_prod_serv_estatus] = useState<cat_prod_serv_estatus>({})
-  var arreglo_cat_prod_serv_estatus: cat_prod_serv_estatus[] = []
+  const arreglo_cat_prod_serv_estatus: cat_prod_serv_estatus[] = []
 
   const [cat_prod_serv_presenta, setCat_prod_serv_presenta] = useState<cat_prod_serv_presenta>({})
-  var arreglo_cat_prod_serv_presenta: cat_prod_serv_presenta[] = []
+  const arreglo_cat_prod_serv_presenta: cat_prod_serv_presenta[] = []
 
   const [cat_prod_serv_negocios, setCat_prod_serv_negocios] = useState<cat_prod_serv_negocios>({})
-  var arreglo_cat_prod_serv_negocios: cat_prod_serv_negocios[] = []
+  const [arreglo_cat_prod_serv_negocios, setArreglo_cat_prod_serv_negocios] = useState<cat_prod_serv_negocios[]>([])
 
   const [cat_prod_serv_presenta_info_ad, setCat_prod_serv_presenta_info_ad] = useState<cat_prod_serv_presenta_info_ad>({})
-  var arreglo_cat_prod_serv_presenta_info_ad: cat_prod_serv_presenta_info_ad[] = []
+  const arreglo_cat_prod_serv_presenta_info_ad: cat_prod_serv_presenta_info_ad[] = []
 
   const [cat_prod_serv_presenta_estatus, setCat_prod_serv_presenta_estatus] = useState<cat_prod_serv_presenta_estatus>({})
-  var arreglo_cat_prod_serv_presenta_presenta_estatus: cat_prod_serv_presenta_estatus[] = []
+  const arreglo_cat_prod_serv_presenta_presenta_estatus: cat_prod_serv_presenta_estatus[] = []
 
   const [cat_prod_serv_archivos, setCat_prod_serv_archivos] = useState<cat_prod_serv_archivos>({})
-  var arreglo_cat_prod_serv_archivos: cat_prod_serv_archivos[] = []
+  const arreglo_cat_prod_serv_archivos: cat_prod_serv_archivos[] = []
 
   const [cat_prod_serv_paquetes, setCat_prod_serv_paquetes] = useState<cat_prod_serv_paquetes>({})
-  var arreglo_cat_prod_serv_paquetes: cat_prod_serv_paquetes[] = []
+  const arreglo_cat_prod_serv_paquetes: cat_prod_serv_paquetes[] = []
 
   const [producto, setProducto] = useState<Producto>({})
   //---------
@@ -109,7 +109,7 @@ function Page_Inventories() {
         e.preventDefault()
         console.log(cat_prod_serv_info_ad);
         arreglo_cat_prod_serv_info_ad.push(cat_prod_serv_info_ad)
-
+        console.log(arreglo_cat_prod_serv_info_ad);
 
         var tbody = document.getElementById('table-tbody-cat_prod_serv_info_ad') as HTMLTableElement
 
@@ -170,7 +170,9 @@ function Page_Inventories() {
       case 'formulario-cat_prod_serv_negocios':
         e.preventDefault()
         console.log(cat_prod_serv_negocios)
-        arreglo_cat_prod_serv_negocios.push(cat_prod_serv_negocios)
+        setArreglo_cat_prod_serv_negocios([...arreglo_cat_prod_serv_negocios, cat_prod_serv_negocios])
+        setProducto({ ...producto, cat_prod_serv_negocios: arreglo_cat_prod_serv_negocios })
+        console.log(arreglo_cat_prod_serv_negocios)
         var tbody = document.getElementById('table-tbody-cat_prod_serv_negocios') as HTMLTableElement
         var tr = tbody.insertRow(-1)
         tr.id = `table-trow-${cat_prod_serv_negocios.IdNegocioOK}`
@@ -220,13 +222,8 @@ function Page_Inventories() {
                                         </th>`
         break;
       case 'formulario-producto':
+        e.preventDefault()
         console.log(producto)
-        setProducto({
-          cat_prod_serv_estatus: arreglo_cat_prod_serv_estatus,
-          cat_prod_serv_info_ad: arreglo_cat_prod_serv_info_ad,
-          cat_prod_serv_negocios: arreglo_cat_prod_serv_negocios,
-          cat_prod_serv_presenta: arreglo_cat_prod_serv_presenta,
-        })
         crearProducto(producto)
         break;
       default:
@@ -253,13 +250,13 @@ function Page_Inventories() {
           <form id='formulario-producto' onSubmit={handleSubmit}>
             <div className="input-group mb-3">
               <span className="input-group-text">IdInstitutoOK</span>
-              <input type="text" name='IdInstitutoOK' aria-label="First name" className="form-control" id='producto' onChange={handleInputChange}></input>
+              <input type="text" name='IdInstitutoOK' className="form-control" id='producto' onChange={handleInputChange}></input>
               <span className="input-group-text">IdProdServOK</span>
               <input type="text" name='IdProdServOK' className="form-control" id='producto' onChange={handleInputChange}></input>
             </div>
             <div className="input-group mb-3">
               <span className="input-group-text">IdProdServBK</span>
-              <input type="number" name='IdProdServBK' aria-label="First name" className="form-control" id='producto' onChange={handleInputChange}></input>
+              <input type="number" name='IdProdServBK' className="form-control" id='producto' onChange={handleInputChange}></input>
               <span className="input-group-text">Codigo de Barras</span>
               <input type="text" name='CodigoBarras' aria-label="Codigo de Barras" className="form-control" id='producto' onChange={handleInputChange}></input>
             </div>
@@ -410,14 +407,14 @@ function Page_Inventories() {
               <div className="detail_row:">
                 <div className="input-group mb-3">
                   <span className="input-group-text">Activo</span>
-                  <input type="text" name='Activo' aria-label="First name" className="form-control" id='producto' onChange={handleInputChange} ></input>
+                  <input type="text" name='Activo' className="form-control" id='producto' onChange={handleInputChange} ></input>
                   <span className="input-group-text">Borrado</span>
                   <input type="text" name='Borrado' className="form-control" id='producto' onChange={handleInputChange} ></input>
                 </div>
                 <label>detail_row_reg</label>
                 <div className="input-group mb-3">
                   <span className="input-group-text">FechaReg</span>
-                  <input type="text" name='FechaReg' aria-label="First name" className="form-control" id='producto' onChange={handleInputChange} ></input>
+                  <input type="text" name='FechaReg' className="form-control" id='producto' onChange={handleInputChange} ></input>
                   <span className="input-group-text">UsuarioReg</span>
                   <input type="text" name='UsuarioReg' className="form-control" id='producto' onChange={handleInputChange} ></input>
                 </div>
@@ -444,38 +441,38 @@ function Page_Inventories() {
               <h5 className='text-center'>cat_prod_serv_estatus</h5>
               <hr />
               <form id='formulario-cat_prod_serv_estatus' onSubmit={handleSubmit}>
-                <><div className="input-group mb-3">
+                <div className="input-group mb-3">
                   <span className="input-group-text">IdEstatusOK</span>
-                  <input type="text" name='IdEstatusOK' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
+                  <input type="text" name='IdEstatusOK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
                 </div>
-                  <div className="input-group mb-3">
-                    <span className="input-group-text">Actual</span>
-                    <input type="text" name='Actual' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
-                    <span className="input-group-text">Estatus</span>
-                    <input type="text" name='Estatus' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
-                  </div>
-                  <div className="input-group mb-3">
-                    <span className="input-group-text">Observacion</span>
-                    <input type="text" name='Observacion' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
-                  </div>
-                  <h6>detail_row</h6>
-                  <div className="input-group mb-3">
-                    <span className="input-group-text">Activo</span>
-                    <input type="text" name='Activo' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
-                    <span className="input-group-text">Borrado</span>
-                    <input type="text" name='Borrado' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
-                  </div>
-                  <h6>detail_row_reg</h6>
-                  <div className="input-group mb-3">
-                    <span className="input-group-text">FechaReg</span>
-                    <input type="text" name='FechaReg' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
-                    <span className="input-group-text">UsuarioReg</span>
-                    <input type="text" name='UsuarioReg' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
-                  </div>
-                  <hr />
-                  <div className='text-center'>
-                    <button type="submit" className="btn btn-primary" onClick={() => { hideModal() }}>Insertar</button>
-                  </div></>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Actual</span>
+                  <input type="text" name='Actual' onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
+                  <span className="input-group-text">Estatus</span>
+                  <input type="text" name='Estatus' onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
+                </div>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Observacion</span>
+                  <input type="text" name='Observacion' onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
+                </div>
+                <h6>detail_row</h6>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Activo</span>
+                  <input type="text" name='Activo' onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
+                  <span className="input-group-text">Borrado</span>
+                  <input type="text" name='Borrado' onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
+                </div>
+                <h6>detail_row_reg</h6>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">FechaReg</span>
+                  <input type="text" name='FechaReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
+                  <span className="input-group-text">UsuarioReg</span>
+                  <input type="text" name='UsuarioReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_estatus'></input>
+                </div>
+                <hr />
+                <div className='text-center'>
+                  <button type="submit" className="btn btn-primary" onClick={() => { hideModal() }}>Insertar</button>
+                </div>
               </form>
             </React.Fragment>
           ) : queBoton == 'cat_prod_serv_info_ad' ? (
@@ -485,28 +482,28 @@ function Page_Inventories() {
               <form id='formulario-cat_prod_serv_info_ad' onSubmit={handleSubmit}>
                 <div className="input-group mb-3">
                   <span className="input-group-text">IdEtiqueta</span>
-                  <input type="text" name='IdEtiquetaOK' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
+                  <input type="text" name='IdEtiquetaOK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
                   <span className="input-group-text">Etiqueta</span>
-                  <input type="text" name='Etiqueta' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
+                  <input type="text" name='Etiqueta' onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
                 </div>
                 <div className="input-group mb-3">
                   <span className="input-group-text">Valor</span>
-                  <input type="text" name='Valor' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
+                  <input type="text" name='Valor' onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
                 </div>
                 <div className="input-group mb-3">
                   <span className="input-group-text">IdSeccionOK</span>
-                  <input type="text" name='IdSeccionOK' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
+                  <input type="text" name='IdSeccionOK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
                   <span className="input-group-text">Seccion</span>
-                  <input type="text" name='Seccion' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
+                  <input type="text" name='Seccion' onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
                 </div>
                 <div className="input-group mb-3">
                   <span className="input-group-text">Secuencia</span>
-                  <input type="number" name='Secuencia' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
+                  <input type="number" name='Secuencia' onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
                 </div>
                 <h6>detail_row</h6>
                 <div className="input-group mb-3">
                   <span className="input-group-text">Activo</span>
-                  <input type="text" name='Activo' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
+                  <input type="text" name='Activo' onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
                   <span className="input-group-text">Borrado</span>
                   <input type="text" name='Borrado' aria-label="Borrado" onChange={handleInputChange} className="form-control" id='cat_prod_serv_info_ad'></input>
                 </div>
@@ -530,9 +527,9 @@ function Page_Inventories() {
               <form id='formulario-cat_prod_serv_presenta' onSubmit={handleSubmit}>
                 <div className="input-group mb-3">
                   <span className="input-group-text">IdPresentaBK</span>
-                  <input type="text" name='IdPresentaBK' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta'></input>
+                  <input type="text" name='IdPresentaBK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta'></input>
                   <span className="input-group-text">DesPresenta</span>
-                  <input type="text" name='DesPresenta' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta'></input>
+                  <input type="text" name='DesPresenta' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta'></input>
                 </div>
 
 
@@ -650,7 +647,40 @@ function Page_Inventories() {
                 </Collapsible>
                 <hr />
                 <Collapsible trigger="Paquetes:">
-
+                  <div className="div-cat_prod_serv_presenta_paquetes">
+                    <table id='table-cat_prod_serv_presenta_paquetes' className="table table-sm">
+                      <thead className="table-info">
+                        <tr>
+                          <th>IdPresentacionBK</th>
+                          <th>DesPresenta</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody id='table-tbody-cat_prod_serv_presenta_paquetes'>
+                        <tr>
+                          <th>Prueba 1</th>
+                          <th>Prueba 2</th>
+                          <th>
+                            <button type="button" className="btn btn-success btn-sm">Actualizar</button>
+                            <button type="button" className="btn btn-danger btn-sm">Eliminar</button>
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className='text-center'>
+                      <button
+                        type="button"
+                        className="btn btn-info btn-sm"
+                        id="cat_prod_serv_presenta_paquetes"
+                        onClick={() => {
+                          setQueBoton('cat_prod_serv_presenta_paquetes');
+                          showModal();
+                        }}
+                      >
+                        Crear nuevo
+                      </button>
+                    </div>
+                  </div>
                 </Collapsible>
                 <hr />
                 <div className='text-center'>
@@ -665,7 +695,7 @@ function Page_Inventories() {
               <form id='formulario-cat_prod_serv_negocios' onSubmit={handleSubmit}>
                 <div className="input-group mb-3">
                   <span className="input-group-text">IdNegocioOK</span>
-                  <input type="text" name='IdNegocioOK' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_negocios'></input>
+                  <input type="text" name='IdNegocioOK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_negocios'></input>
                 </div>
                 <div className='text-center'>
                   <button type="submit" className="btn btn-primary" onClick={() => { hideModal() }}>Insertar</button>
@@ -680,43 +710,169 @@ function Page_Inventories() {
               <form id='formulario-cat_prod_serv_presenta_info_ad' onSubmit={handleSubmit}>
                 <div className="input-group mb-3">
                   <span className="input-group-text">IdEtiqueta</span>
-                  <input type="text" name='IdEtiquetaOK' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="text" name='IdEtiquetaOK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                   <span className="input-group-text">Etiqueta</span>
-                  <input type="text" name='Etiqueta' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="text" name='Etiqueta' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                 </div>
                 <div className="input-group mb-3">
                   <span className="input-group-text">Valor</span>
-                  <input type="text" name='Valor' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="text" name='Valor' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                 </div>
                 <div className="input-group mb-3">
                   <span className="input-group-text">IdSeccionOK</span>
-                  <input type="text" name='IdSeccionOK' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="text" name='IdSeccionOK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                   <span className="input-group-text">Seccion</span>
-                  <input type="text" name='Seccion' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="text" name='Seccion' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                 </div>
                 <div className="input-group mb-3">
                   <span className="input-group-text">Secuencia</span>
-                  <input type="number" name='Secuencia' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="number" name='Secuencia' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                 </div>
                 <h6>detail_row</h6>
                 <div className="input-group mb-3">
                   <span className="input-group-text">Activo</span>
-                  <input type="text" name='Activo' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="text" name='Activo' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                   <span className="input-group-text">Borrado</span>
-                  <input type="text" name='Borrado' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="text" name='Borrado' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                 </div>
                 <h6>detail_row_reg</h6>
                 <div className="input-group mb-3">
                   <span className="input-group-text">FechaReg</span>
-                  <input type="text" name='FechaReg' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="text" name='FechaReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                   <span className="input-group-text">UsuarioReg</span>
-                  <input type="text" name='UsuarioReg' aria-label="First name" onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
+                  <input type="text" name='UsuarioReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_info_ad'></input>
                 </div>
                 <div className='text-center'>
                   <button type="submit" className="btn btn-primary" onClick={() => { hideModal() }}>Insertar</button>
                 </div>
               </form>
 
+            </React.Fragment>
+          ) : queBoton == 'cat_prod_serv_presenta_estatus' ? (
+            <React.Fragment>
+              <h5 className='text-center'>cat_prod_serv_presenta_estatus</h5>
+              <hr />
+              <form id='formulario-cat_prod_serv_presenta_estatus' onSubmit={handleSubmit}>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">IdEstatusOK</span>
+                  <input type="text" name='IdEstatusOK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_estatus'></input>
+                </div>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Actual</span>
+                  <input type="text" name='Actual' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_estatus'></input>
+                  <span className="input-group-text">Estatus</span>
+                  <input type="text" name='Estatus' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_estatus'></input>
+                </div>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Observacion</span>
+                  <input type="text" name='Observacion' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_estatus'></input>
+                </div>
+                <h6>detail_row</h6>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Activo</span>
+                  <input type="text" name='Activo' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_estatus'></input>
+                  <span className="input-group-text">Borrado</span>
+                  <input type="text" name='Borrado' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_estatus'></input>
+                </div>
+                <h6>detail_row_reg</h6>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">FechaReg</span>
+                  <input type="text" name='FechaReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_estatus'></input>
+                  <span className="input-group-text">UsuarioReg</span>
+                  <input type="text" name='UsuarioReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_estatus'></input>
+                </div>
+                <hr />
+                <div className='text-center'>
+                  <button type="submit" className="btn btn-primary" onClick={() => { hideModal() }}>Insertar</button>
+                </div>
+              </form>
+
+            </React.Fragment>
+          ) : queBoton == 'cat_prod_serv_presenta_archivos' ? (
+            <React.Fragment>
+              <h5 className='text-center'>cat_prod_serv_presenta_archivos</h5>
+              <hr />
+              <form id='formulario-cat_prod_serv_presenta_archivos' onSubmit={handleSubmit}>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">IdArchivoBK</span>
+                  <input type="text" name='IdArchivoBK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                  <span className="input-group-text">DesArchivo</span>
+                  <input type="text" name='DesArchivo' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                </div>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">RutaArchivo</span>
+                  <input type="text" name='RutaArchivo' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                </div>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">IdTipoArchivoOK</span>
+                  <input type="text" name='IdTipoArchivoOK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                  <span className="input-group-text">TipoArchivo</span>
+                  <input type="text" name='TipoArchivo' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                </div>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Seccion</span>
+                  <input type="text" name='Seccion' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                  <span className="input-group-text">Secuencia</span>
+                  <input type="text" name='Secuencia' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                </div>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Principal</span>
+                  <input type="text" name='Principal' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                </div>
+                <h6>detail_row</h6>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Activo</span>
+                  <input type="text" name='Activo' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                  <span className="input-group-text">Borrado</span>
+                  <input type="text" name='Borrado' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                </div>
+                <h6>detail_row_reg</h6>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">FechaReg</span>
+                  <input type="text" name='FechaReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                  <span className="input-group-text">UsuarioReg</span>
+                  <input type="text" name='UsuarioReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_archivos'></input>
+                </div>
+                <hr />
+                <div className='text-center'>
+                  <button type="submit" className="btn btn-primary" onClick={() => { hideModal() }}>Insertar</button>
+                </div>
+              </form>
+            </React.Fragment>
+          ) : queBoton == 'cat_prod_serv_presenta_paquetes' ? (
+            <React.Fragment>
+              <h5 className='text-center'>cat_prod_serv_presenta_paquetes</h5>
+              <hr />
+              <form id='formulario-cat_prod_serv_presenta_paquetes' onSubmit={handleSubmit}>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">IdPresentaBK</span>
+                  <input type="text" name='IdPresentaBK' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_paquetes'></input>
+                  <span className="input-group-text">Cantidad</span>
+                  <input type="number" name='Cantidad' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_paquetes'></input>
+                </div>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">DesPresenta</span>
+                  <input type="text" name='DesPresenta' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_paquetes'></input>
+                </div>
+                <h6>detail_row</h6>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">Activo</span>
+                  <input type="text" name='Activo' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_paquetes'></input>
+                  <span className="input-group-text">Borrado</span>
+                  <input type="text" name='Borrado' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_paquetes'></input>
+                </div>
+                <h6>detail_row_reg</h6>
+                <div className="input-group mb-3">
+                  <span className="input-group-text">FechaReg</span>
+                  <input type="text" name='FechaReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_paquetes'></input>
+                  <span className="input-group-text">UsuarioReg</span>
+                  <input type="text" name='UsuarioReg' onChange={handleInputChange} className="form-control" id='cat_prod_serv_presenta_paquetes'></input>
+                </div>
+                <hr />
+                <div className='text-center'>
+                  <button type="submit" className="btn btn-primary" onClick={() => { hideModal() }}>Insertar</button>
+                </div>
+              </form>
             </React.Fragment>
           ) : queBoton == 'detail_row' ? (
             <React.Fragment>
@@ -730,4 +886,4 @@ function Page_Inventories() {
   );
 }
 
-export default Page_Inventories;
+export default FormularioProducto;

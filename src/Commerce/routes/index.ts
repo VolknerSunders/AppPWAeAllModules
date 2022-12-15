@@ -43,6 +43,21 @@ const routes: Routes = {
     component: asyncComponentLoader(() => import('@/Commerce/pages/general/NotFound')),
     path: '*',
   },
+  [Pages.DetallesProductos]: {
+    component: asyncComponentLoader(() => import('@/Commerce/pages/products/DetallesProductos')),
+    path: '/DetallesProductos',
+    title: 'Detalles de Producto'
+  },
+  [Pages.FormularioProductos]: {
+    component: asyncComponentLoader(() => import('@/Commerce/pages/products/FormularioProductos')),
+    path: '/FormularioProductos',
+    title: 'Registro de Productos'
+  },
+  [Pages.VistaProductos]: {
+    component: asyncComponentLoader(() => import('@/Commerce/pages/products/VistaProductos')),
+    path: '/ListaProductos',
+    title: 'Lista de Productos'
+  },
 };
 
 export default routes;

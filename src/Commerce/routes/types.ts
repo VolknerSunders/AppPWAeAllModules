@@ -10,6 +10,9 @@ enum Pages {
   Page3,
   Page4,
   NotFound,
+  DetallesProductos,
+  FormularioProductos,
+  VistaProductos
 }
 
 type PathRouteCustomProps = {
